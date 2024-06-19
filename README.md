@@ -26,6 +26,9 @@
     ~ Plotting Clusters:
       Visualize the clusters using UMAP.
 
+      ![Umap_clusters](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/aa594455-2359-484f-ad75-c76681d23c3e)
+
+
 
 
 
