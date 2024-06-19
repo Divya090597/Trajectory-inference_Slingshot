@@ -35,6 +35,8 @@
 
 **3. Trajectory Inference with Slingshot**
 
+From now on, we will start using that clustering and data reduction techniques for trajectory inference. The whole process can be done using a single function named slingshot, which is simply a wrapper for the 2 main steps for trajectory inference. The first step of the process is to define the lineages and then fit a curve through the data that defines a trajectory
+
     ~ Preparing Data for Slingshot:
       Extract UMAP embeddings and clustering results from Seurat.
    
@@ -45,6 +47,14 @@
       Visualize the inferred trajectories.
 
 ![Plot_lineages](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/eddb09b3-88a1-46c0-b8cc-48147d94c3e8)
+
+**Defining Principal Curves**
+
+Once the clusters are connected, Slingshot allows you to transform them to a smooth trajectory using principal curves. This is an algorithm that iteratively changes an initial curve to better match the data points. It was developed for linear data. To apply it to single-cell data, slingshot adds two enhancements:
+
+It will run principal curves for each ‘lineage’, which is a set of clusters that go from a defined start cluster to some end cluster
+
+Lineages with a same set of clusters will be constrained so that their principal curves remain bundled around the overlapping clusters
 
 
 **4. Differential Gene Expression with tradeSeq**
