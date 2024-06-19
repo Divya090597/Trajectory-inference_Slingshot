@@ -33,6 +33,41 @@
 
   ![Umap_clusters](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/aa594455-2359-484f-ad75-c76681d23c3e)
 
+**3. Trajectory Inference with Slingshot**
+
+    ~ Preparing Data for Slingshot:
+      Extract UMAP embeddings and clustering results from Seurat.
+   
+    ~ Running Slingshot:
+      Define cell lineages and plot them.
+   
+    ~ Plotting Lineages:
+      Visualize the inferred trajectories.
+
+**4. Differential Gene Expression with tradeSeq**
+
+    ~ Filtering and Preparing Counts:
+      Filter genes to speed up computations.
+  
+    ~ Fitting Generalized Additive Models (GAMs):
+      Fit GAMs to the filtered counts using the inferred trajectories.
+  
+    ~ Plotting Differential Expression:
+      Define a function to plot differentially expressed genes along pseudotime.
+  
+    ~ Finding Differentially Expressed Genes:
+      Perform various tests to identify genes that change with pseudotime, between start and end points, and between lineages.
+  
+    ~ Plotting Results:
+      Plot the most significant differentially expressed genes.
+
+**Conclusion**
+
+This detailed workflow demonstrates the power of integrating multiple tools like Seurat, Slingshot, and tradeSeq for comprehensive scRNA-seq data analysis.
+
+
+
+
 
 
 
