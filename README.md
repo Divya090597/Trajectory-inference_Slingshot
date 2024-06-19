@@ -44,6 +44,9 @@
     ~ Plotting Lineages:
       Visualize the inferred trajectories.
 
+![Plot_lineages](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/eddb09b3-88a1-46c0-b8cc-48147d94c3e8)
+
+
 **4. Differential Gene Expression with tradeSeq**
 
     ~ Filtering and Preparing Counts:
