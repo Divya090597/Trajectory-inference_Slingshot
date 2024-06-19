@@ -1,6 +1,7 @@
 # Trajectory-inference_Slingshot
 
 **1. Data Acquisition and Preparation**
+   
     ~ Creating a Data Directory:
       Start by creating a directory named "data" to store the files.
       
@@ -15,6 +16,7 @@
       load the data into R and convert it to a sparse matrix, which is then saved as an "RDS file" for efficient storage
 
 **2. Seurat Workflow**
+   
     ~ Loading Data:
       The data is loaded from the RDS file and subsetted for further analysis.
     ~ Seurat Analysis Pipeline:
