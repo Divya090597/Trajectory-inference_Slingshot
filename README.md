@@ -56,8 +56,18 @@ It will run principal curves for each ‘lineage’, which is a set of clusters 
 
 Lineages with a same set of clusters will be constrained so that their principal curves remain bundled around the overlapping clusters
 
+![Plot_Curves](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/c2f7c282-b8a4-466f-93c3-e986aeefc934)
 
 **4. Differential Gene Expression with tradeSeq**
+
+The main way to interpret a trajectory is to find genes that change along the trajectory. There are many ways to define differential expression along a trajectory:
+
+    ~ Expression changes along a particular path (i.e. change with pseudotime)
+    ~ Expression differences between branches
+    ~ Expression changes at branch points
+    ~ Expression changes somewhere along the trajectory
+
+tradeSeq is a algorithm to find trajectory differentially expressed genes. It works by smoothing the gene expression along the trajectory by fitting a smoother using generalized additive models (GAMs), and testing whether certain coefficients are statstically different between points in the trajectory.
 
     ~ Filtering and Preparing Counts:
       Filter genes to speed up computations.
@@ -67,12 +77,41 @@ Lineages with a same set of clusters will be constrained so that their principal
   
     ~ Plotting Differential Expression:
       Define a function to plot differentially expressed genes along pseudotime.
+
+![Plot_Clusters](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/555d53cf-8721-4bbc-8224-28c22d6cc4ff)
+
   
     ~ Finding Differentially Expressed Genes:
       Perform various tests to identify genes that change with pseudotime, between start and end points, and between lineages.
   
     ~ Plotting Results:
       Plot the most significant differentially expressed genes.
+
+**Genes that change with pseudo time**
+
+![Genes@change$pseudotime](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/8b85eb7f-ecbb-4adf-83be-4c70f34bcc24)
+
+**Genes that change between two pseudotime points**
+
+![bet_2 pseudotime points](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/46468a17-1635-4682-ab60-ac0e5e0f5289)
+
+**Genes that are different between lineages**
+
+More interesting are genes that are different between two branches. There are several ways to define “different between branches”, and each have their own functions:
+
+     ~ Different at the end points, using "diffEndTest"
+     ~ Different at the branching point, using "earlyDETest"
+     ~ Different somewhere in pseudotime the branching point, using "patternTest"
+     ~ Note that the last function requires that the pseudotimes between two lineages are aligned.
+
+Using "diffEndTest"
+
+![diff bet 2 lineages](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/466263c5-8ca8-42ff-9a15-1c2fc68505ba)
+
+Using "earlyDETest"
+
+![Branch_point_association](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/425b081b-704e-4b12-9691-ca5188e4b166)
+
 
 **Conclusion**
 
