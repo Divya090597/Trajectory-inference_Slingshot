@@ -1,5 +1,23 @@
 # Trajectory-inference_Slingshot
 
+Trajectory inference (TI) in single-cell data analysis involves the reconstruction of developmental trajectories and the identification of gene expression changes over time within a cell population. This concept allows researchers to study dynamic changes in gene expression and uncover the underlying biological processes within a single-cell dataset.
+
+When studying dynamic cellular processes like cell differentiation or cellular response to certain stimulus, cells transition from one functional state to another. So, when these cells move between states there are certain set of genes that are activated during earlier states and certain set of genes activating during later states.
+
+Trajectory inference is primarily used to:
+
+Reconstruct Developmental Trajectories: This involves ordering cells along a trajectory based on their gene expression profiles, which can 
+represent biological processes such as cell differentiation.
+
+Identify Gene Expression Changes: TI helps in identifying genes that are associated with specific lineages in the trajectory or exhibit 
+differential expression between lineages, providing insights into biological processes.
+
+**Purpose of Pseudo time**
+
+Ordering Cells: Pseudotime assigns a numerical value to each cell, ordering them along a trajectory based on their gene expression profiles. This ordering is used to represent the progression of cells through a biological process, such as differentiation or a developmental pathway.
+
+Capturing Developmental Dynamics: Pseudotime provides a continuous representation of the underlying biological process, allowing researchers to study and visualize the dynamic changes in gene expression and cell state over the course of development.
+
 **1. Data Acquisition and Preparation**
    
     ~ Creating a Data Directory:
