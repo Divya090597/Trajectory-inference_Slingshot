@@ -4,7 +4,7 @@ Trajectory inference (TI) in single-cell data analysis involves the reconstructi
 
 When studying dynamic cellular processes like cell differentiation or cellular response to certain stimulus, cells transition from one functional state to another. So, when these cells move between states there are certain set of genes that are activated during earlier states and certain set of genes activating during later states.
 
-Trajectory inference is primarily used to:
+**Trajectory inference is primarily used to:**
 
 Reconstruct Developmental Trajectories: This involves ordering cells along a trajectory based on their gene expression profiles, which can 
 represent biological processes such as cell differentiation.
