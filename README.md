@@ -18,6 +18,10 @@ Ordering Cells: Pseudotime assigns a numerical value to each cell, ordering them
 
 Capturing Developmental Dynamics: Pseudotime provides a continuous representation of the underlying biological process, allowing researchers to study and visualize the dynamic changes in gene expression and cell state over the course of development.
 
+**Slingshot consists of two main stages:** 
+1) the inference of the global lineage structure and
+2) the inference of pseudotime variables for cells along each lineage
+
 **1. Data Acquisition and Preparation**
    
     ~ Creating a Data Directory:
