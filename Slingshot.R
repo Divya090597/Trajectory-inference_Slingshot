@@ -3,6 +3,7 @@ library(Seurat)
 library(tradeSeq)
 library(dplyr)
 library(slingshot)
+library(dplyr)
 
 
 #Create data folder
@@ -29,10 +30,17 @@ data <- read.delim("data/GSE72857_umitab.txt", header = T, row.names = 1)
 comp_matrix <- Matrix::Matrix(as.matrix(data), sparse = T)
 saveRDS(comp_matrix, "data/GSE72857_umitab.rds")
 
+View(umi_counts)
+
 # Loading data
 umi_counts <- readRDS("data/GSE72857_umitab.rds")
 umi_counts <- umi_counts[, c(T, F, F, F, F)]
 dim(umi_counts)
+
+View(data@assays$RNA@meta.data)
+
+exp_data <- read.delim("C:\\Users\\divya_vq9ublx\\Downloads\\GSE72857_experimental_design.txt.gz")
+View(exp_data)
 
 # Define a color pallete to use
 pal <- c(RColorBrewer::brewer.pal(9, "Set1"), RColorBrewer::brewer.pal(8, "Set2"))
@@ -49,22 +57,25 @@ data <- FindNeighbors(data)
 data <- FindClusters(data, resolution = 1)
 data <- RunUMAP(data, n.neighbors = 10, dims = 1:50, spread = 2, min.dist = 0.3)
 
-# Plot the clusters
-DimPlot(data, group.by = "RNA_snn_res.1")
+View(data@assays$RNA@meta.data)
 
-view(data@reductions$umap@cell.embeddings)
+
+View(data@reductions$umap@cell.embeddings)
 
 # Save the objects as separate matrices for input in slingshot
 dimred <- data@reductions$umap@cell.embeddings
 clustering <- data$RNA_snn_res.1
-counts <- as.matrix(data@assays$RNA$counts[data@assays$RNA@var.features, ])
-view(data@assays$RNA)
+counts <- as.matrix(data@assays$RNA$counts[data@assays$RNA@meta.data$var.features])
 
+View(counts)
 # Get the variable features
 var_features <- VariableFeatures(data)
 
 # Extract the counts matrix for the variable features
 counts <- as.matrix(data@assays$RNA$counts[var_features, ])
+
+View(dimred)
+
 
 #.............Trajectory inference with Slingshot...........................
 
@@ -131,6 +142,8 @@ for (i in unique(clustering)) {
 # Second plot: scatter plot with lineages
 plot(dimred[, 1:2], col = pal[clustering], cex = 0.5, pch = 16, main = "Lineages")
 
+
+
 # Extract and plot lineage curves
 lineage_curves <- slingCurves(lineages)
 for (curve in lineage_curves) {
@@ -147,6 +160,9 @@ library(tradeSeq)
 # Removing some genes to speed up the computations
 filt_counts <- counts[rowSums(counts > 5) > ncol(counts)/100, ]
 dim(filt_counts)
+
+curves <- getCurves(lineages, approx_points = 300, thresh = 0.01, stretch = 0.8, allow.breaks = FALSE, shrink = 0.99)
+curves
 
 sce <- fitGAM(counts = as.matrix(filt_counts), sds = curves)
 
