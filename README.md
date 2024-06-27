@@ -55,6 +55,29 @@ Capturing Developmental Dynamics: Pseudotime provides a continuous representatio
 
   ![Umap_clusters](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/aa594455-2359-484f-ad75-c76681d23c3e)
 
+ ![Screenshot 2024-06-25 111038](https://github.com/Divya090597/Trajectory-inference_Slingshot/assets/156469276/5df6c654-c23e-4f76-89d5-6f2a2716c783)
+
+
+**Finding Cluster-Specific Markers**
+1. Finding Markers for Cluster 2:
+
+          we use the 'FindMarkers' function to find genes that are differentially expressed in cluster 2 compared to all other clusters.
+          The 'head' function displays the top 5 markers.
+2. Finding Markers that Distinguish Cluster 5 from Clusters 0 and 3:
+
+          we identify markers that distinguish cluster 5 from clusters 0 and 3.
+          The 'ident.1' parameter specifies the cluster of interest (5),
+          while 'ident.2' lists the clusters for comparison (0 and 3).
+3. Finding markers for every cluster compared to all remaining cells:
+
+          The ,FindAllMarkers' function finds markers for all clusters.
+          The 'only.pos' parameter ensures that only 'upregulated (positive)' markers are returned.
+4. Filtering and Selecting Top Markers:
+
+          Code groups markers by cluster and filters them to retain those with an average log2 fold-change greater than 1, indicating strong differential 
+          expression.
+6. Selecting the Top 10 Markers Per Cluster
+
 **3. Trajectory Inference with Slingshot**
 
 From now on, we will start using that clustering and data reduction techniques for trajectory inference. The whole process can be done using a single function named slingshot, which is simply a wrapper for the 2 main steps for trajectory inference. The first step of the process is to define the lineages and then fit a curve through the data that defines a trajectory
