@@ -3,7 +3,9 @@ library(Seurat)
 library(tradeSeq)
 library(dplyr)
 library(slingshot)
-library(dplyr)
+library(Matrix)
+library(patchwork)
+library(tidyverse)
 
 
 #Create data folder
@@ -30,6 +32,7 @@ data <- read.delim("data/GSE72857_umitab.txt", header = T, row.names = 1)
 comp_matrix <- Matrix::Matrix(as.matrix(data), sparse = T)
 saveRDS(comp_matrix, "data/GSE72857_umitab.rds")
 
+
 View(umi_counts)
 
 # Loading data
@@ -37,10 +40,17 @@ umi_counts <- readRDS("data/GSE72857_umitab.rds")
 umi_counts <- umi_counts[, c(T, F, F, F, F)]
 dim(umi_counts)
 
-View(data@assays$RNA@meta.data)
 
-exp_data <- read.delim("C:\\Users\\divya_vq9ublx\\Downloads\\GSE72857_experimental_design.txt.gz")
-View(exp_data)
+# Load the raw accession meta data to merge required columns to our seurat object
+cell_data <- read.csv("C:\\Users\\divya_vq9ublx\\Downloads\\SraRunTable.txt")
+View(cell_data)
+
+# Create the new column names and merge the data
+data$Sample_name <- cell_data$Sample.Name
+data$Cell_labels <- cell_data$source_name
+
+View(data@meta.data)
+
 
 # Define a color pallete to use
 pal <- c(RColorBrewer::brewer.pal(9, "Set1"), RColorBrewer::brewer.pal(8, "Set2"))
@@ -57,13 +67,50 @@ data <- FindNeighbors(data)
 data <- FindClusters(data, resolution = 1)
 data <- RunUMAP(data, n.neighbors = 10, dims = 1:50, spread = 2, min.dist = 0.3)
 
-View(data@assays$RNA@meta.data)
+
+
+View(data@meta.data)
+
+# Plot the clusters
+DimPlot(data, reduction = 'umap', group.by = "Cell_labels")
+DimPlot(data, reduction = 'umap', group.by = "seurat_clusters")
+
+#Finding differentially expressed features (cluster biomarkers)
+# find all markers of cluster 2
+cluster2_markers <- FindMarkers(data, ident.1 = 2)
+head(cluster2_markers, n = 5)
+
+# find all markers distinguishing cluster 5 from clusters 0 and 3
+cluster5_markers <- FindMarkers(data, ident.1 = 5, ident.2 = c(0, 3))
+head(cluster5_markers, n = 5)
+
+
+# find markers for every cluster compared to all remaining cells
+data_markers <- FindAllMarkers(data, only.pos = TRUE)
+data_markers %>%
+  group_by(cluster) %>%
+  dplyr::filter(avg_log2FC > 1)
+cluster0_markers <- FindMarkers(data, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+
+data_markers %>%
+  group_by(cluster) %>%
+  dplyr::filter(avg_log2FC > 1) %>%
+  slice_head(n = 10) %>%
+  ungroup() -> top10_data
+DoHeatmap(data, features = top10_data$gene) + NoLegend()
+
+View(top10_data)
+
+saveRDS(top10_data,"~/DataAnalysis/data/top10_data.rds")
+
+View(data)
 
 
 View(data@reductions$umap@cell.embeddings)
 
 # Save the objects as separate matrices for input in slingshot
 dimred <- data@reductions$umap@cell.embeddings
+clustering <- Idents(data)
 clustering <- data$RNA_snn_res.1
 counts <- as.matrix(data@assays$RNA$counts[data@assays$RNA@meta.data$var.features])
 
@@ -176,6 +223,8 @@ plot_differential_expression <- function(feature_id) {
                      plotSmoothers(sce, as.matrix(counts), gene = feature_id[1]))
 }
 
+
+
 # Genes that change with pseudotime
 
 pseudotime_association <- associationTest(sce)
@@ -207,3 +256,7 @@ branch_point_association$feature_id <- rownames(branch_point_association)
 
 feature_id <- branch_point_association %>% filter(pvalue < 0.05) %>% arrange(desc(waldStat)) %>% dplyr::slice(1) %>% pull(feature_id)
 plot_differential_expression(feature_id)
+
+
+
+
