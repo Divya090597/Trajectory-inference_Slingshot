@@ -1,6 +1,6 @@
 ###################### PSEUDO BULK ######################
 
-######### 1. Did some Data Manupulation
+######### 1.Done some Data Manupulation
 
 View(Bulk_agg@meta.data)
 
@@ -82,11 +82,11 @@ head(m_text)
 
 ### Define Output Folder and File Paths
 output_folder <- "~/DataAnalysis/R"
-Project_Name <- "Bulk_D"
-matrix_file = paste(output_folder, Project_Name, "Bulk_D.txt", sep="");
+Project_Name <- "Bulk_Trj"
+matrix_file = paste(output_folder, Project_Name, "Bulk_Trj.txt", sep="");
 
 ### Write Data to Files
-write.table(2^ agg@assays$RNA$data, file = matrix_file, sep="\t", row.names = TRUE,col.names=NA)
+write.table(2^ Bulk_agg@assays$RNA$data, file = matrix_file, sep="\t", row.names = TRUE,col.names=NA)
 head(Bulk_agg@assays$RNA$data)
 metaData_file = paste(output_folder, Project_Name, "_meta.txt", sep="");
 write.table(m_text, file = metaData_file, sep="\t", row.names=F)
