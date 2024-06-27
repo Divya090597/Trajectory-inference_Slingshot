@@ -1,6 +1,6 @@
 ###################### PSEUDO BULK ######################
 
-######### 1.Done some Data Manupulation
+######### 1.Did some Data Manupulation
 
 View(Bulk_agg@meta.data)
 
